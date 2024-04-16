@@ -20,40 +20,51 @@ function meuEscopo() {
         const alturaUsuario = Number(altura.value);
         const imc = Number(pesoUsuario / (alturaUsuario * alturaUsuario));
 
-        if (isNaN(pesoUsuario) || isNaN(alturaUsuario)) {
-            console.log('Somente números são aceitos.');
-            alert('Somente números são aceitos.')
-            // resultado.classList.add('estilo');
-            // resultado.innerHTML = `Somente números são aceitos.`
-        } else if ((pesoUsuario >= 600 || pesoUsuario <= 25) || (alturaUsuario >= 2.5 || alturaUsuario <= 0.62)) {
-            alert('Peso ou altura inválidos.');
+        // if (isNaN(pesoUsuario) || isNaN(alturaUsuario)) {
+        //     resultado.classList.add('estilo');
+        //     resultado.innerHTML = `Somente números são aceitos.`
+        // }
+
+        if (pesoUsuario === 0 || pesoUsuario === null || pesoUsuario === undefined || isNaN(pesoUsuario)) {
+            resultado.classList.add('erro');
+            resultado.innerHTML = `<p>Peso invalido.</p>`
+        } else if ((pesoUsuario > 600 || pesoUsuario < 25)) {
+            resultado.classList.add('erro');
+            resultado.innerHTML = `<p>Peso fora dos limites definidos.</p>`
+        } else if (alturaUsuario === 0 || alturaUsuario === null || alturaUsuario === undefined || isNaN(alturaUsuario)) {
+            resultado.classList.add('erro');
+            resultado.innerHTML = `<p>Altura invalida.</p>`
+        } else if (alturaUsuario >= 2.5 || alturaUsuario <= 0.62) {
+            resultado.classList.add('erro');
+            resultado.innerHTML = `<p>Altura fora dos limites definidos.</p>`
         } else {
             if (imc <= 18.5) {
                 console.log(`IMC = ${imc}, abaixo do peso.`);
-                resultado.classList.add('estilo');
+                resultado.classList.add('resultadoOk');
                 resultado.innerHTML = `<p>IMC = ${imc.toFixed(2)} Abaixo do peso.</p>`
             } else if (imc > 18.5 && imc <= 24.9) {
                 console.log(`${imc} Peso normal`);
-                resultado.classList.add('estilo');
+                resultado.classList.add('resultadoOk');
                 resultado.innerHTML = `<p>IMC = ${imc.toFixed(2)} Peso normal.</p>`
             } else if (imc >= 25 && imc <= 29.9) {
                 console.log(`${imc} Sobrepeso`);
-                resultado.classList.add('estilo');
+                resultado.classList.add('resultadoOk');
                 resultado.innerHTML = `<p>IMC = ${imc.toFixed(2)} Sobrepeso.</p>`
             } else if (imc >= 30 && imc <= 34.9) {
                 console.log(`${imc} Obesidade grau 1`);
-                resultado.classList.add('estilo');
+                resultado.classList.add('resultadoOk');
                 resultado.innerHTML = `<p>IMC = ${imc.toFixed(2)} Obesidade grau 1.</p>`
             } else if (imc >= 35 && imc <= 39.9) {
                 console.log(`${imc} Obesidade grau 2`);
-                resultado.classList.add('estilo');
+                resultado.classList.add('resultadoOk');
                 resultado.innerHTML = `<p>IMC = ${imc.toFixed(2)} Obesidade grau 2.</p>`
             } else if (imc >= 40) {
                 console.log(`${imc} Obesidade grau 3`);
-                resultado.classList.add('estilo');
+                resultado.classList.add('resultadoOk');
                 resultado.innerHTML = `<p>IMC = ${imc.toFixed(2)} Obesidade grau 3.</p>`
             }
         }
+
     }
     form.addEventListener('submit', recebeEventoForm);
 }
@@ -68,7 +79,7 @@ meuEscopo();
 // if (pesoUsuario && alturaUsuario) {
 //     if (imc <= 18.5) {
 //         console.log(`IMC = ${imc}, abaixo do peso.`);
-//         resultado.classList.add('estilo');
+//         resultado.classList.add('resultadoOk');
 //         resultado.innerHTML = `<p>IMC = ${imc.toFixed(2)} Abaixo do peso.</p>`
 //     } else if (imc > 18.5 && imc <= 24.9) {
 //         console.log(`${imc} Peso normal`);

@@ -4,6 +4,7 @@
     --primary-color: rgb(17, 86, 102); 
     --primary-color-darker: rgb(9, 48, 56); 
     --primary-color-result: rgb(40, 73, 30);
+    --primary-color-result-erro: rgb(216, 47, 47);
 }
 
 * {
@@ -42,14 +43,14 @@ h1 {
 .tabela th {
     /* color: red; */
     text-align: left;
-    background-color: #a187b6;
+    background-color: #8bb46a;
 }
 
 tr:nth-child(even){
-    background-color: #a09999;
+    background-color: #ecdddd;
 }
 tr:hover{
-    background-color: #dddddd;
+    background-color: #b3b5bd;
 }
 
 form input, form label, form button {
@@ -85,7 +86,7 @@ form button:hover {
     background-color: var(--primary-color-darker);
 }
 
-.estilo{
+.resultadoOk{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -97,5 +98,18 @@ form button:hover {
     height: 50px;
     cursor: pointer;
     margin-top: 30px;
-    
+}
+
+.erro {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: var(--primary-color-result-erro);
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    height: 50px;
+    cursor: pointer;
+    margin-top: 30px;
 }
