@@ -1,110 +1,73 @@
-/**
-    Calculadora de IMC
-
-    * Receber o peso e altura do usuário;
-    * Validar number;
-    * Calcular o IMC do usuário;
-    * Exibir o resultado logo abaixo do botão calcular
- */
 function meuEscopo() {
     const form = document.querySelector('form');
-    const resultado = document.querySelector('.resultado');
 
     function recebeEventoForm(evento) {
         evento.preventDefault();
 
-        const peso = form.querySelector('#peso');
-        const altura = form.querySelector('#altura');
+        const inputPeso = form.querySelector('#peso');
+        const inputAltura = form.querySelector('#altura');
 
-        const pesoUsuario = Number(peso.value);
-        const alturaUsuario = Number(altura.value);
-        const imc = Number(pesoUsuario / (alturaUsuario * alturaUsuario));
+        const peso = Number(inputPeso.value);
+        const altura = Number(inputAltura.value);
 
-        // if (isNaN(pesoUsuario) || isNaN(alturaUsuario)) {
-        //     resultado.classList.add('estilo');
-        //     resultado.innerHTML = `Somente números são aceitos.`
-        // }
-
-        if (pesoUsuario === 0 || pesoUsuario === null || pesoUsuario === undefined || isNaN(pesoUsuario)) {
-            resultado.classList.add('erro');
-            resultado.innerHTML = `<p>Peso invalido.</p>`
-        } else if ((pesoUsuario > 600 || pesoUsuario < 25)) {
-            resultado.classList.add('erro');
-            resultado.innerHTML = `<p>Peso fora dos limites definidos.</p>`
-        } else if (alturaUsuario === 0 || alturaUsuario === null || alturaUsuario === undefined || isNaN(alturaUsuario)) {
-            resultado.classList.add('erro');
-            resultado.innerHTML = `<p>Altura invalida.</p>`
-        } else if (alturaUsuario >= 2.5 || alturaUsuario <= 0.62) {
-            resultado.classList.add('erro');
-            resultado.innerHTML = `<p>Altura fora dos limites definidos.</p>`
-        } else {
-            if (imc <= 18.5) {
-                console.log(`IMC = ${imc}, abaixo do peso.`);
-                resultado.classList.add('resultadoOk');
-                resultado.innerHTML = `<p>IMC = ${imc.toFixed(2)} Abaixo do peso.</p>`
-            } else if (imc > 18.5 && imc <= 24.9) {
-                console.log(`${imc} Peso normal`);
-                resultado.classList.add('resultadoOk');
-                resultado.innerHTML = `<p>IMC = ${imc.toFixed(2)} Peso normal.</p>`
-            } else if (imc >= 25 && imc <= 29.9) {
-                console.log(`${imc} Sobrepeso`);
-                resultado.classList.add('resultadoOk');
-                resultado.innerHTML = `<p>IMC = ${imc.toFixed(2)} Sobrepeso.</p>`
-            } else if (imc >= 30 && imc <= 34.9) {
-                console.log(`${imc} Obesidade grau 1`);
-                resultado.classList.add('resultadoOk');
-                resultado.innerHTML = `<p>IMC = ${imc.toFixed(2)} Obesidade grau 1.</p>`
-            } else if (imc >= 35 && imc <= 39.9) {
-                console.log(`${imc} Obesidade grau 2`);
-                resultado.classList.add('resultadoOk');
-                resultado.innerHTML = `<p>IMC = ${imc.toFixed(2)} Obesidade grau 2.</p>`
-            } else if (imc >= 40) {
-                console.log(`${imc} Obesidade grau 3`);
-                resultado.classList.add('resultadoOk');
-                resultado.innerHTML = `<p>IMC = ${imc.toFixed(2)} Obesidade grau 3.</p>`
-            }
+        if(!peso || peso <= 25 || peso >= 600){
+            setResultado('Peso invalido', false);
+            return;
         }
+
+        if(!altura || altura <= 0.60 || altura >= 2.5) {
+            setResultado('Altura invalida', false);
+            return;
+        }
+
+        const imc = getImc(peso, altura);
+        const imcNivel = getNivelImc(imc);
+
+        const msg = `Seu imc é ${imc.toFixed(2)} (${imcNivel})`;
+
+        setResultado(msg, true);
 
     }
     form.addEventListener('submit', recebeEventoForm);
+
+    function getImc(peso, altura) {
+        const imc = peso / (altura * altura);
+        return imc;
+    }
+
+    function getNivelImc(imc){
+        const nivel = ['Abaixo do peso', 'Peso normal',
+        'Sobrepeso', 'Obesidade grau 1', 'Obesidade grau 2',
+        'Obesidade grau 3'];
+
+        if(imc >= 39.9) return nivel[5];
+        if(imc >= 34.9) return nivel[4];
+        if (imc >= 29.9) return nivel[3];
+        if (imc >= 24.9) return nivel[2];
+        if (imc >= 18.5) return nivel[1];
+        if (imc < 18.5) return nivel[0];
+    }
+
+    function criaP(){
+        const p = document.createElement('p');
+        return p;
+    }
+
+    function setResultado(msg, isValid){
+        const resultado = document.querySelector('.resultado');
+
+        resultado.innerHTML = '';
+
+        const p = criaP();
+
+        if(isValid){
+            p.classList.add('resultadoOk');
+        }else{
+            p.classList.add('erro');
+        }
+
+        p.innerHTML = msg;
+        resultado.appendChild(p);
+    }
 }
 meuEscopo();
-
-
-
-
-
-
-
-// if (pesoUsuario && alturaUsuario) {
-//     if (imc <= 18.5) {
-//         console.log(`IMC = ${imc}, abaixo do peso.`);
-//         resultado.classList.add('resultadoOk');
-//         resultado.innerHTML = `<p>IMC = ${imc.toFixed(2)} Abaixo do peso.</p>`
-//     } else if (imc > 18.5 && imc <= 24.9) {
-//         console.log(`${imc} Peso normal`);
-//         resultado.classList.add('estilo');
-//         resultado.innerHTML = `<p>IMC = ${imc.toFixed(2)} Peso normal.</p>`
-//     } else if (imc >= 25 && imc <= 29.9) {
-//         console.log(`${imc} Sobrepeso`);
-//         resultado.classList.add('estilo');
-//         resultado.innerHTML = `<p>IMC = ${imc.toFixed(2)} Sobrepeso.</p>`
-//     } else if (imc >= 30 && imc <= 34.9) {
-//         console.log(`${imc} Obesidade grau 1`);
-//         resultado.classList.add('estilo');
-//         resultado.innerHTML = `<p>IMC = ${imc.toFixed(2)} Obesidade grau 1.</p>`
-//     } else if (imc >= 35 && imc <= 39.9) {
-//         console.log(`${imc} Obesidade grau 2`);
-//         resultado.classList.add('estilo');
-//         resultado.innerHTML = `<p>IMC = ${imc.toFixed(2)} Obesidade grau 2.</p>`
-//     } else if (imc >= 40) {
-//         console.log(`${imc} Obesidade grau 3`);
-//         resultado.classList.add('estilo');
-//         resultado.innerHTML = `<p>IMC = ${imc.toFixed(2)} Obesidade grau 3.</p>`
-//     }
-// } else {
-//     console.log('Somente números são aceitos.');
-//     resultado.classList.add('estilo');
-//     resultado.innerHTML = `Somente números são aceitos.`
-// }
-// }
