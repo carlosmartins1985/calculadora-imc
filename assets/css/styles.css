@@ -116,10 +116,8 @@ form button:hover {
 
 @media (max-width: 400px) {
     .tabela {
-        font-size: 14px;
+        font-size: 18px;
     }
 
-    h1{
-        font-size: 12px;
-    }
+    
 }
